@@ -3,6 +3,7 @@ import {UncontrolledTooltip} from 'reactstrap';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
+import {VelocityComponent} from 'velocity-react';
 
 import {removeFile as removeFileAction, saveFile as saveFileAction, saveFolder as saveFolderAction} from '../actions';
 import AddFileModal from '../components/AddFileModal';
@@ -68,7 +69,10 @@ class FileExplorerRowContainer extends React.Component {
            onMouseEnter={() => this.activateNode()}
            onMouseLeave={() => this.deactivateNode()}>
         <span onClick={this.props.onClick}>
-          {this.props.node.children && <this.props.decorators.Toggle style={this.props.style.toggle}/>}
+          {this.props.node.children && <VelocityComponent animation={this.props.animations.toggle.animation}
+                                                          duration={this.props.animations.toggle.duration}>
+            <this.props.decorators.Toggle style={this.props.style.toggle}/>
+          </VelocityComponent>}
           <this.props.decorators.Header node={this.props.node} style={this.props.style.header}/>
         </span>
         {this.state.active && this.renderAction()}
@@ -91,7 +95,7 @@ const mapStateToProps = (state) => {
   return {
     theme: getTheme(state)
   }
-}
+};
 
 export default connect(
   mapStateToProps,
